@@ -1,4 +1,0 @@
-FROM elestio/pgadmin:latest
-
-# Expose the PgAdmin port
-EXPOSE 5050
