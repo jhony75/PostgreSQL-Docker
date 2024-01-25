@@ -1,0 +1,11 @@
+FROM postgres:latest
+
+# Create a directory for SQL scripts
+RUN mkdir -p /docker-entrypoint-initdb.d
+
+# Copy the SQL scripts to the directory
+COPY createTables.sql /docker-entrypoint-initdb.d/
+COPY populate.sql /docker-entrypoint-initdb.d/
+
+# Expose the PostgreSQL port
+EXPOSE 5432
