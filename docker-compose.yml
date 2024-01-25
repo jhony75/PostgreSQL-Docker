@@ -1,33 +1,30 @@
 name: sqlclass
+
 services:
   postgres:
-    build:
-      context: .
     image: my-postgres-container:latest
-    networks:
-      - my-pg-network
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-    expose:
-      - "5432"
+      - ./populate.sql:/docker-entrypoint-initdb.d/
+      - ./postgres-data:/var/lib/postgresql/data
     ports:
-      - "5432"
+      - 5432:4532
     container_name: my-postgres-container
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
+    networks:
+      - my-pg-network
+
   pgadmin:
+    image: my-pgadmin-container:latest
+    ports:
+      - 5050:5050
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin123
-    image: my-pgadmin-container:latest
     networks:
       - my-pg-network
-    expose:
-      - "5050"
-    ports:
-      - "5050"
+
 networks:
   my-pg-network:
     external: true
-volumes:
-  postgres-data:
+
